@@ -28,7 +28,11 @@ class Painter extends CustomPainter {
               this.points[i].coordinates.dy + 0.1,
             ));
 
-        canvas.drawPoints(PointMode.points, this.coordinatePoints, this.points[i].paint);
+        canvas.drawPoints(
+          PointMode.points,
+          this.coordinatePoints,
+          this.points[i].paint,
+        );
       }
     }
   }

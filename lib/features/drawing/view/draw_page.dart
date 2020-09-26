@@ -39,17 +39,22 @@ class _DrawPageState extends State<DrawPage> {
 
   Widget _buildBody() {
     return Center(
-      child: GestureDetector(
-        onPanStart: this._savePointsStart,
-        onPanEnd: this._saveEndPoint,
-        child: Stack(
-          children: [
-            this._buildBoxDraw(),
-            CustomPaint(
-              size: Size.square(300),
-              painter: Painter(points: this.points),
-            )
-          ],
+      child: SizedBox(
+        width: 300,
+        height: 300,
+        child: GestureDetector(
+          onPanStart: this._savePointsStart,
+          onPanUpdate: this._savePointsUpdate,
+          onPanEnd: this._saveEndPoint,
+          child: Stack(
+            children: [
+              this._buildBoxDraw(),
+              CustomPaint(
+                size: Size.square(300),
+                painter: Painter(points: this.points),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -67,9 +72,21 @@ class _DrawPageState extends State<DrawPage> {
 
   void _savePointsStart(DragStartDetails details) {
     setState(() {
-      RenderBox renderBox = this.context.findRenderObject();
       this.points.add(TouchPoint(
-            coordinates: renderBox.globalToLocal(details.globalPosition),
+            coordinates: details.localPosition,
+            paint: Paint()
+              ..strokeCap = this.defaultStrokeCap
+              ..isAntiAlias = true
+              ..color = this.defaultColor.withOpacity(this.defaultOpacity)
+              ..strokeWidth = this.defaultStrokeWidth,
+          ));
+    });
+  }
+
+  void _savePointsUpdate(DragUpdateDetails details) {
+    setState(() {
+      this.points.add(TouchPoint(
+            coordinates: details.localPosition,
             paint: Paint()
               ..strokeCap = this.defaultStrokeCap
               ..isAntiAlias = true
