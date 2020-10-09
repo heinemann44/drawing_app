@@ -5,44 +5,23 @@ import 'package:flutter/material.dart';
 
 class Painter extends CustomPainter {
   List<TouchPoint> points;
-  List<Offset> coordinatePoints;
 
-  Painter({this.points}) {
-    this.coordinatePoints = List();
-  }
+  Painter({this.points});
 
   @override
   void paint(Canvas canvas, Size size) {
-    for (int i = 0; i < this.points.length - 1; i++) {
-      if (this._hasNextPoint(i)) {
-        canvas.drawLine(
-          this.points[i].coordinates,
-          this.points[i + 1].coordinates,
-          this.points[i].paint,
-        );
-      } else if (this._pointExist(i)) {
-        this.coordinatePoints.clear();
-        this.coordinatePoints.add(this.points[i].coordinates);
-        this.coordinatePoints.add(Offset(
-              this.points[i].coordinates.dx + 0.1,
-              this.points[i].coordinates.dy + 0.1,
-            ));
+    if (this.points?.isNotEmpty ?? false) {
+      for (int i = 0; i < this.points.length - 1; i++) {
+        TouchPoint currentPoint = this.points[i];
+        TouchPoint nextPoint = this.points[i + 1];
 
-        canvas.drawPoints(
-          PointMode.points,
-          this.coordinatePoints,
-          this.points[i].paint,
-        );
+        if(nextPoint.type == TouchPointType.MOVE){
+          canvas.drawLine(currentPoint.coordinates, nextPoint.coordinates, currentPoint.paint);
+        }else {
+          canvas.drawCircle(currentPoint.coordinates, currentPoint.paint.strokeWidth, currentPoint.paint);
+        }
       }
     }
-  }
-
-  bool _hasNextPoint(int index) {
-    return this._pointExist(index) && this._pointExist(index + 1);
-  }
-
-  bool _pointExist(int index) {
-    return this.points[index] != null;
   }
 
   @override

@@ -1,5 +1,4 @@
-import 'package:drawing_app/features/drawing/model/touch_point.dart';
-import 'package:drawing_app/features/drawing/view/painter.dart';
+import 'package:drawing_app/features/drawing/view/drawer_table.dart';
 import 'package:flutter/material.dart';
 
 class DrawPage extends StatefulWidget {
@@ -8,17 +7,14 @@ class DrawPage extends StatefulWidget {
 }
 
 class _DrawPageState extends State<DrawPage> {
-  List<TouchPoint> points;
-
-  StrokeCap defaultStrokeCap = StrokeCap.round;
-  Color defaultColor = Colors.black;
-  double defaultOpacity = 1.0;
-  double defaultStrokeWidth = 3.0;
+  Size size;
+  DrawerTable drawer;
 
   @override
   void initState() {
     super.initState();
-    this.points = List();
+    this.size = Size(300, 300);
+    this.drawer = DrawerTable(size: this.size);
   }
 
   @override
@@ -39,64 +35,12 @@ class _DrawPageState extends State<DrawPage> {
 
   Widget _buildBody() {
     return Center(
-      child: SizedBox(
-        width: 300,
-        height: 300,
-        child: GestureDetector(
-          onPanStart: this._savePointsStart,
-          onPanUpdate: this._savePointsUpdate,
-          onPanEnd: this._saveEndPoint,
-          child: Stack(
-            children: [
-              this._buildBoxDraw(),
-              CustomPaint(
-                size: Size.square(300),
-                painter: Painter(points: this.points),
-              )
-            ],
-          ),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black),
         ),
+        child: this.drawer,
       ),
     );
-  }
-
-  Widget _buildBoxDraw() {
-    return Container(
-      width: 300,
-      height: 300,
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.black),
-      ),
-    );
-  }
-
-  void _savePointsStart(DragStartDetails details) {
-    setState(() {
-      this.points.add(TouchPoint(
-            coordinates: details.localPosition,
-            paint: Paint()
-              ..strokeCap = this.defaultStrokeCap
-              ..isAntiAlias = true
-              ..color = this.defaultColor.withOpacity(this.defaultOpacity)
-              ..strokeWidth = this.defaultStrokeWidth,
-          ));
-    });
-  }
-
-  void _savePointsUpdate(DragUpdateDetails details) {
-    setState(() {
-      this.points.add(TouchPoint(
-            coordinates: details.localPosition,
-            paint: Paint()
-              ..strokeCap = this.defaultStrokeCap
-              ..isAntiAlias = true
-              ..color = this.defaultColor.withOpacity(this.defaultOpacity)
-              ..strokeWidth = this.defaultStrokeWidth,
-          ));
-    });
-  }
-
-  void _saveEndPoint(DragEndDetails details) {
-    setState(() => this.points.add(null));
   }
 }
