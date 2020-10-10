@@ -1,4 +1,6 @@
+import 'package:drawing_app/features/drawing/controller/draw_controller.dart';
 import 'package:drawing_app/features/drawing/view/drawer_table.dart';
+import 'package:drawing_app/features/drawing/view/floating_menu.dart';
 import 'package:flutter/material.dart';
 
 class DrawPage extends StatefulWidget {
@@ -6,15 +8,21 @@ class DrawPage extends StatefulWidget {
   _DrawPageState createState() => _DrawPageState();
 }
 
-class _DrawPageState extends State<DrawPage> {
+class _DrawPageState extends State<DrawPage>
+    with SingleTickerProviderStateMixin {
   Size size;
   DrawerTable drawer;
+  DrawController _drawController;
 
   @override
   void initState() {
     super.initState();
     this.size = Size(300, 300);
-    this.drawer = DrawerTable(size: this.size);
+    this._drawController = DrawController();
+    this.drawer = DrawerTable(
+      size: this.size,
+      controller: this._drawController,
+    );
   }
 
   @override
@@ -23,6 +31,9 @@ class _DrawPageState extends State<DrawPage> {
       child: Scaffold(
         appBar: this._buildAppBar(),
         body: this._buildBody(),
+        floatingActionButton: FloatingMenu(
+          drawController: this._drawController,
+        ),
       ),
     );
   }

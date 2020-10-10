@@ -1,11 +1,17 @@
+import 'package:drawing_app/features/drawing/controller/draw_controller.dart';
 import 'package:drawing_app/features/drawing/model/touch_point.dart';
 import 'package:drawing_app/features/drawing/view/painter.dart';
 import 'package:flutter/material.dart';
 
 class DrawerTable extends StatefulWidget {
   final Size size;
+  final DrawController controller;
 
-  const DrawerTable({Key key, this.size}) : super(key: key);
+  const DrawerTable({
+    Key key,
+    this.size,
+    this.controller,
+  }) : super(key: key);
 
   @override
   _DrawerTableState createState() => _DrawerTableState();
@@ -17,7 +23,6 @@ class _DrawerTableState extends State<DrawerTable> {
   List<TouchPoint> points;
 
   StrokeCap defaultStrokeCap = StrokeCap.round;
-  Color defaultColor = Colors.black;
   double defaultOpacity = 1.0;
   double defaultStrokeWidth = 3.0;
 
@@ -72,7 +77,7 @@ class _DrawerTableState extends State<DrawerTable> {
               paint: Paint()
                 ..strokeCap = this.defaultStrokeCap
                 ..isAntiAlias = true
-                ..color = this.defaultColor.withOpacity(this.defaultOpacity)
+                ..color = this.widget.controller.currentColor.withOpacity(this.defaultOpacity)
                 ..strokeWidth = this.defaultStrokeWidth,
             ));
       });
