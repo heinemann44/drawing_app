@@ -1,5 +1,6 @@
 import 'package:drawing_app/features/drawing/controller/draw_controller.dart';
 import 'package:drawing_app/features/drawing/view/menu_color.dart';
+import 'package:drawing_app/features/drawing/view/menu_stroke.dart';
 import 'package:flutter/material.dart';
 
 class FloatingMenu extends StatefulWidget {
@@ -84,6 +85,7 @@ class _FloatingMenuState extends State<FloatingMenu>
       child: Column(
         children: [
           MenuColor(drawController: this.widget.drawController),
+          MenuStroke(drawController: this.widget.drawController),
         ],
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class DrawController{
@@ -14,10 +15,14 @@ class DrawController{
 
   bool isOpenMenu;
   Color currentColor;
+  double currentStroke;
+  ValueNotifier<double> valueStroke;
 
   DrawController(){
     this.isOpenMenu = false;
     this.currentColor = Colors.black;
+    this.currentStroke = 3.0;
+    this.valueStroke = ValueNotifier<double>(this.currentStroke);
   }
 
   void updateMenuState(){

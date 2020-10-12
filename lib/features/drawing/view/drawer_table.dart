@@ -24,7 +24,6 @@ class _DrawerTableState extends State<DrawerTable> {
 
   StrokeCap defaultStrokeCap = StrokeCap.round;
   double defaultOpacity = 1.0;
-  double defaultStrokeWidth = 3.0;
 
   @override
   void initState() {
@@ -78,7 +77,7 @@ class _DrawerTableState extends State<DrawerTable> {
                 ..strokeCap = this.defaultStrokeCap
                 ..isAntiAlias = true
                 ..color = this.widget.controller.currentColor.withOpacity(this.defaultOpacity)
-                ..strokeWidth = this.defaultStrokeWidth,
+                ..strokeWidth = this.widget.controller.currentStroke,
             ));
       });
     }

@@ -16,13 +16,11 @@ class _MenuColorState extends State<MenuColor> {
     return GestureDetector(
       onTap: this._handleOnTapMenuColor,
       child: Container(
-        width: 30,
-        height: 30,
         margin: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
+        child: Icon(
+          Icons.color_lens,
           color: this.widget.drawController.currentColor,
-          border: Border.all(color: Colors.black, width: 3),
-          borderRadius: BorderRadius.circular(16),
+          size: 30,
         ),
       ),
     );
@@ -73,7 +71,7 @@ class _MenuColorState extends State<MenuColor> {
     );
   }
 
-  void _choseOptionColor(Color color){
+  void _choseOptionColor(Color color) {
     setState(() {
       this.widget.drawController.currentColor = color;
       Navigator.of(context).pop();
