@@ -45,12 +45,45 @@ class _DrawPageState extends State<DrawPage>
   }
 
   Widget _buildBody() {
-    return Center(
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
+    return Stack(
+      alignment: AlignmentDirectional.bottomCenter,
+      children: [
+        Center(
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black),
+            ),
+            child: DrawerTable(
+              size: this.size,
+              controller: this._drawController,
+            ),
+          ),
         ),
-        child: this.drawer,
+        this._buildResetButton(),
+      ],
+    );
+  }
+
+  Widget _buildResetButton() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: RawMaterialButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Text(
+          "Reset",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+          ),
+        ),
+        padding: const EdgeInsets.all(8),
+        fillColor: Theme.of(context).primaryColor,
+        onPressed: () {
+          this._drawController.resetDraw();
+          setState(() {});
+        },
       ),
     );
   }

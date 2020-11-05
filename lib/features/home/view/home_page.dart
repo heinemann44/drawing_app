@@ -24,7 +24,12 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildBody() {
     return Center(
-      child: this._buildStartDrawButton(),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          this._buildStartDrawButton(),
+        ],
+      ),
     );
   }
 
@@ -43,4 +48,5 @@ class _HomePageState extends State<HomePage> {
       builder: (_) => DrawPage(),
     ));
   }
+
 }

@@ -18,7 +18,7 @@ class Painter extends CustomPainter {
         if(nextPoint.type == TouchPointType.MOVE){
           canvas.drawLine(currentPoint.coordinates, nextPoint.coordinates, currentPoint.paint);
         }else {
-          canvas.drawCircle(currentPoint.coordinates, currentPoint.paint.strokeWidth, currentPoint.paint);
+          canvas.drawCircle(currentPoint.coordinates, currentPoint.paint.strokeWidth/2, currentPoint.paint);
         }
       }
     }

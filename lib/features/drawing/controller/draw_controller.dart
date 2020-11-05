@@ -1,3 +1,4 @@
+import 'package:drawing_app/features/drawing/model/touch_point.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +19,8 @@ class DrawController{
   double currentStroke;
   ValueNotifier<double> valueStroke;
 
+  List<TouchPoint> points;
+
   DrawController(){
     this.isOpenMenu = false;
     this.currentColor = Colors.black;
@@ -27,5 +30,9 @@ class DrawController{
 
   void updateMenuState(){
     this.isOpenMenu = !this.isOpenMenu;
+  }
+
+  void resetDraw(){
+    this.points.clear();
   }
 }

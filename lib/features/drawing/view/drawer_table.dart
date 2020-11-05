@@ -20,7 +20,7 @@ class DrawerTable extends StatefulWidget {
 class _DrawerTableState extends State<DrawerTable> {
   GlobalKey _painterKey;
 
-  List<TouchPoint> points;
+
 
   StrokeCap defaultStrokeCap = StrokeCap.round;
   double defaultOpacity = 1.0;
@@ -28,7 +28,7 @@ class _DrawerTableState extends State<DrawerTable> {
   @override
   void initState() {
     this._painterKey = GlobalKey();
-    this.points = List();
+    this.widget.controller.points = List();
     super.initState();
   }
 
@@ -46,7 +46,7 @@ class _DrawerTableState extends State<DrawerTable> {
           child: RepaintBoundary(
             child: CustomPaint(
               key: this._painterKey,
-              painter: Painter(points: this.points),
+              painter: Painter(points: this.widget.controller.points),
               child: ConstrainedBox(
                 constraints: BoxConstraints(
                   minWidth: this.widget.size.width,
@@ -66,11 +66,11 @@ class _DrawerTableState extends State<DrawerTable> {
     Offset offset = this._getLocalOffset(event.position);
 
     if (this.isInDrawArea(offset)) {
-      if (this.points.length != 0 && this._isFar(offset)) {
+      if (this.widget.controller.points.length != 0 && this._isFar(offset)) {
         type = TouchPointType.TAP;
       }
       setState(() {
-        this.points.add(TouchPoint(
+        this.widget.controller.points.add(TouchPoint(
               type: type,
               coordinates: offset,
               paint: Paint()
@@ -94,7 +94,7 @@ class _DrawerTableState extends State<DrawerTable> {
   }
 
   bool _isFar(Offset offset1) {
-    Offset offset2 = this.points.last.coordinates;
+    Offset offset2 = this.widget.controller.points.last.coordinates;
     return (offset1.dx - offset2.dx).abs() > 60 ||
         (offset1.dy - offset2.dy).abs() > 60;
   }
